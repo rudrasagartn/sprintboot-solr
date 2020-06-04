@@ -4,17 +4,24 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 @SolrDocument(collection = "products")
+@ApiModel(description = "Product is featched from Solr Index")
 public class Product {
 
 	@Id
 	@Indexed(name = "product_id", type = "long")
+	@ApiModelProperty(notes = "The unique id of product")
 	private long product_id;
 
 	@Indexed(name = "product_desc", type = "string")
+	@ApiModelProperty(notes = "The description of the product")
 	private String product_desc;
 
 	@Indexed(name = "product_code", type = "string")
+	@ApiModelProperty(notes = "The product code")
 	private String product_code;
 
 	public long getProduct_id() {

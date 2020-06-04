@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +21,11 @@ import org.springframework.web.client.RestTemplate;
 import com.rs.solr.model.Product;
 import com.rs.solr.repository.SolrProductRepository;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 @RestController
+@RequestMapping("/api/")
 public class SolrIndexControler {
 
 	@Autowired
@@ -29,8 +34,10 @@ public class SolrIndexControler {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	@RequestMapping(value = "/findById", method = RequestMethod.GET)
-	public Optional<Product> findByProductId(@RequestParam Optional<Long> productId) {
+	@GetMapping(value = "/findById")
+	@ApiOperation(value = "Find Product By ProductId", notes = "Input type is numberic", response = Product.class)
+	public Optional<Product> findByProductId(
+			@ApiParam(value = "Provide an numeric to find the product") @RequestParam Optional<Long> productId) {
 		return solrProductRepository.findById(productId.get());
 	}
 
